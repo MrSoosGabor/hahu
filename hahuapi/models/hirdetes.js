@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 
 const hirdetesSchema = new Schema({
   _id: Number,
-  kategoria: Number,
+  kategoria: {
+    type: Number,
+    default: 1,
+  },
   cim: {
     type: String,
     required: true,
@@ -17,6 +20,7 @@ const hirdetesSchema = new Schema({
   },
   hirdetesDatuma: {
     type: Date,
+    default: Date.now,
   },
   serulesmentes: Boolean,
   arFt: {
