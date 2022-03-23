@@ -30,13 +30,30 @@ router.post("/", function (req, res, next) {
 
     hirdetes
       .save()
-      .then(res.json({ status: "created" }))
+      .then(res.status(200).json({ status: "created" }))
       .catch((err) => console.log(err));
   } catch (err) {
     res.status(400).json({
       error: err.message,
     });
   }
+});
+
+router.get("/", function (req, res, next) {
+  Hirdetes.find().then((hirdetesek) => {
+    res.json(hirdetesek);
+  });
+});
+
+router.delete("/:id", function (req, res, next) {
+  const id = req.params.id;
+  Hirdetes.findByIdAndDelete(id)
+    .then(
+      res.json({
+        status: "deleted",
+      })
+    )
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;
