@@ -43,7 +43,7 @@ router.post("/", function (req, res, next) {
 router.get("/:mezo", function (req, res, next) {
   const m = req.params.mezo;
   Hirdetes.find()
-    .populate("kategoria")
+    .populate("kategoria", "-_id")
     .sort({ [m]: 1 })
     .then((hirdetesek) => {
       res.json(hirdetesek);
