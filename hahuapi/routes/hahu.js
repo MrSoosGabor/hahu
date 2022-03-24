@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Hirdetes = require("../models/hirdetes");
+const Kategoria = require("../models/kategoria");
 
 router.post("/", function (req, res, next) {
   const _id = req.body._id;
@@ -39,10 +40,14 @@ router.post("/", function (req, res, next) {
   }
 });
 
-router.get("/", function (req, res, next) {
-  Hirdetes.find().then((hirdetesek) => {
-    res.json(hirdetesek);
-  });
+router.get("/:mezo", function (req, res, next) {
+  const m = req.params.mezo;
+  Hirdetes.find()
+    .populate("kategoria")
+    .sort({ [m]: 1 })
+    .then((hirdetesek) => {
+      res.json(hirdetesek);
+    });
 });
 
 router.delete("/:id", function (req, res, next) {
